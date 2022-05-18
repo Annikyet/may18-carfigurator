@@ -1,104 +1,70 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Carfigurator</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.0.2 -->
     <link rel="stylesheet" href="solar.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@mdi/font@5.9.55/css/materialdesignicons.min.css'>
     <link rel="stylesheet" href="style.css">
+
 
   </head>
   <body>
     <header>
       <nav class="navbar container-fluid">
         <h1 class="display-4">Carfigurator</h1>
+        <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-cart" aria-controls="offcanvasRight">
+          <span id="cart-btn-total">$0 </span>
+          <i class="mdi mdi-cart"></i>
+        </button>
+        
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-cart" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Shopping Cart</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+              <div class="border-top">
+                <div class="d-flex justify-content-between">
+                  <h4>Total</h4>
+                  <h6>$270000
+                    <button class="btn" onclick="deleteCar('id')">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </h6>
+                </div>
+                <p class="ms-3">Feature</p>
+                <p class="ms-3">Feature</p>
+                <p class="ms-3">Feature</p>
+              </div>
+              <div class="border-top">
+                <div class="d-flex justify-content-between">
+                  <h4>Total</h4>
+                  <h6>$270000
+                    <button class="btn" onclick="deleteCar('id')">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </h6>
+                </div>
+                <p class="ms-3">Feature</p>
+                <p class="ms-3">Feature</p>
+                <p class="ms-3">Feature</p>
+              </div>
+            </ul>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-secondary">Checkout</button>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
-    <main class="container-fluid">
-      <div class="row">
-        <div class="navbar container-fluid">
-          <h2 class="navbar-brand">Body Style</h2>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Convertible</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Liftback</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Sedan</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="navbar container-fluid">
-          <h2 class="navbar-brand">Drivetrain</h2>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card bg-black" onclick="selectOption('awd')">
-            <img src="https://thiscatdoesnotexist.com/" alt="" class="card-img-top">
-            <div class="card-body">
-              <h3 class="card-title">360HP AWD Electric</h3>
-              <p class="card-text">Meow meow meow meow meow meow meow meow meow.</p>
-              <h5 class="card-subtitle">+$12,000</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">320HP RWD Plug-in Hybrid</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">240HP RWD Electric</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="navbar container-fluid">
-          <h2 class="navbar-brand">Color</h2>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Burgundy</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Teal</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Black</h3>
-            </div>
-          </div>
-        </div>
-      </div>
+
+    <main class="container-fluid" id="options">
+      <!-- Options go here in JS -->
       <div class="row">
         <div class="col d-flex justify-content-end mt-4">
           <button class="btn btn-primary">Add to Cart</button>
