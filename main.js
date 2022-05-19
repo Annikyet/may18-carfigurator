@@ -65,7 +65,9 @@ const options = {
 }
 
 class Option {
-  constructor(name, description, image, price) {
+  constructor(id, component, name, description, image, price) {
+    this.id = id
+    this.component = component
     this.name = name
     this.description = description
     this.image = image
@@ -76,9 +78,9 @@ class Option {
   get html() {
     return `
       <div class="col-md-6 col-lg-4">
-      <div class="card${this.isSelected ? " bg-black" : ""}" onclick="selectOption('meow')">
+      <div class="card" onclick="selectOption('${this.component}', '${this.id}')">
         <img src="${this.image}" alt="" class="card-img-top">
-        <div class="card-body">
+        <div class="card-body${this.isSelected ? " bg-dark text-light" : ""}">
           <h3 class="card-title">${this.name}</h3>
           <p class="card-text">${this.description}</p>
           <h5 class="card-subtitle">+$${this.price}</h5>
@@ -89,13 +91,15 @@ class Option {
 }
 
 class Component {
-  constructor(component) {
+  constructor(id, component) {
     this.name = component.name
     this.selection = undefined
     this.options = {}
     for (const option in component) {
       if (option !== 'name') {
         this.options[option] = new Option(
+          option,
+          id,
           component[option].name,
           component[option].description,
           component[option].image,
@@ -120,19 +124,17 @@ class Component {
   }
 
   set select(selection) {
-    for (const option in options) {
-      if (option !== 'name') {
-        this.options[option].isSelected = false
-      }
+    for (const option in this.options) {
+      this.options[option].isSelected = false
     }
     this.options[selection].isSelected = true
   }
 }
 
 let components = {
-  bodies: new Component(options.bodies),
-  engines: new Component(options.engines),
-  colors: new Component(options.colors)
+  bodies: new Component('bodies', options.bodies),
+  engines: new Component('engines', options.engines),
+  colors: new Component('colors', options.colors)
 }
 
 function draw() {
@@ -144,7 +146,7 @@ function draw() {
 }
 
 function selectOption(component, option) {
-
+  components[component].select = option
   draw()
 }
 
