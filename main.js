@@ -35,7 +35,7 @@ const options = {
       price: 6000
     },
     awd: {
-      name: '360HP Electric',
+      name: '360HP AWD Electric',
       description: 'Meow meow meow meow meow meow meow meow meow.',
       image: '//thiscatdoesnotexist.com',
       price: 16000
@@ -64,52 +64,96 @@ const options = {
   }
 }
 
-let selections = {
-  bodies: undefined,
-  engines: undefined,
-  colors: undefined
+class Option {
+  constructor(name, description, image, price) {
+    this.name = name
+    this.description = description
+    this.image = image
+    this.price = price
+    this.isSelected = false
+  }
+
+  get html() {
+    return `
+      <div class="col-md-6 col-lg-4">
+      <div class="card${this.isSelected ? " bg-black" : ""}" onclick="selectOption('meow')">
+        <img src="${this.image}" alt="" class="card-img-top">
+        <div class="card-body">
+          <h3 class="card-title">${this.name}</h3>
+          <p class="card-text">${this.description}</p>
+          <h5 class="card-subtitle">+$${this.price}</h5>
+        </div>
+      </div>
+      </div>`
+  }
 }
 
-function optionHtml(component, option) {
-return `
-<div class="col-md-6 col-lg-4">
-<div class="card${selections[component] === option ? " bg-black" : ""}" onclick="selectOption('${component}', '${option}')">
-  <img src="${options[component][option].image}" alt="" class="card-img-top">
-  <div class="card-body">
-    <h3 class="card-title">${options[component][option].name}</h3>
-    <p class="card-text">${options[component][option].description}</p>
-    <h5 class="card-subtitle">+$${options[component][option].price}</h5>
-  </div>
-</div>
-</div>`
+class Component {
+  constructor(component) {
+    this.name = component.name
+    this.selection = undefined
+    this.options = {}
+    for (const option in component) {
+      if (option !== 'name') {
+        this.options[option] = new Option(
+          component[option].name,
+          component[option].description,
+          component[option].image,
+          component[option].price
+        )
+      }
+    }
+  }
+  
+  get html() {
+    let html = ``
+    html += `
+      <div class="row">
+      <div class="navbar container-fluid">
+        <h2 class="navbar-brand">${this.name}</h2>
+      </div>`
+    for (const option in this.options) {
+        html += this.options[option].html
+      }
+    html += `</div>`
+    return html
+  }
+
+  set select(selection) {
+    for (const option in options) {
+      if (option !== 'name') {
+        this.options[option].isSelected = false
+      }
+    }
+    this.options[selection].isSelected = true
+  }
 }
 
-function componentHtml(component) {
-  return `
-  <div class="row">
-  <div class="navbar container-fluid">
-    <h2 class="navbar-brand">${options[component].name}</h2>
-  </div>`
+let components = {
+  bodies: new Component(options.bodies),
+  engines: new Component(options.engines),
+  colors: new Component(options.colors)
 }
 
 function draw() {
-  let html = ""
-  for (const component in options) {
-    html += componentHtml(component)
-    for (const option in options[component]) {
-      // this is super hacky...
-      if (option !== 'name') {
-        html += optionHtml(component, option)
-      }
-    }
-    html += `</div>`
+  let html = ''
+  for (const component in components) {
+    html += components[component].html
   }
   document.getElementById('options').innerHTML = html
 }
 
 function selectOption(component, option) {
-  selections[component] = option
+
   draw()
 }
 
+
+
 draw()
+
+// class option - done
+// class component x3 instances, with embedded option classes & html method - done
+// price summation in draw function
+// controller class for button clicks
+// car class with options, price, etc
